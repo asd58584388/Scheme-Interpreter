@@ -1,0 +1,359 @@
+//--有正常输入输出的用例
+
+//(define a
+//    (lambda (n)
+//        (if (eq? n 1)
+//            1
+//            (* n (a (- n 1))))))
+//(a 5)
+//=120
+
+//(let ((a (lambda (y) (+ y 1))))
+//(a 2))
+//=3
+
+//(let ((x 2) (y 3))
+//  (let ((x 7) (z (+ x y)))
+//       (* z x)))
+//=35
+
+//(let* ((x 2) (y 3))
+//    (let* ((x 7) (z (+ x y)))
+//    (* z x)))
+//=70
+
+//(begin (+ 1 1) (- 3 8))
+//=-5
+
+//(case 3
+//    ((7 5 1) 999)
+//    ((9 4 2) 232)
+//    (else 111))
+//=111
+
+//(case 3
+//    ((7 5 1) 999)
+//    ((s 5 ) 232)
+//    ((as) 123)
+//    (else 111))
+//=111
+
+//(quote 15)
+//=15
+
+//(quote (as x (s ) (zxc s (xz 123)) 123))
+//=(as x (s) (zxc s (xz 123)) 123)
+
+//(letrec ((even? (lambda (n) (if (zero? n) true (odd? (- n 1)))))
+//         (odd?  (lambda (n) (if (zero? n) false (even? (- n 1))))))
+//         (even? 166))
+//=true
+
+//(delay 5)
+//=closure
+
+//(define infinite (lambda (y) (+ y (infinite 10))))
+//(define f (lambda (z) 11))
+//(f (delay (infinite 10)))
+//=11
+
+//"test String"
+//="test String"
+
+//(cons 5 2)
+//=(5 2)
+
+//(cons 5 (cons 5 3))
+//=(5 5 3)
+
+//(list (list 1 (list 2) 3) (list 4 5 6))
+//=((1 (2) 3) (4 5 6))
+
+//(cons (list 1 (list 2) 3) (list 4 5 6))
+//=((1 (2) 3) 4 5 6)
+
+//(list)
+//=()
+
+//(list (list 1 (list 2) 3) (list 4 (list 5) 6))
+//=((1 (2) 3) (4 (5) 6))
+
+//(cons (list 1 (list 2) 3) (list 4 (list 5) 6))
+//=((1 (2) 3) 4 (5) 6)
+
+//(car (cons (list 1 (list 2) 3) (list 4 (list 5) 6)))
+//=(1 (2) 3)
+
+//(cons (list 1 (cons 2 3) 4) (list 5 (list 6) (list) 7))
+//=((1 (2 3) 4) 5 (6) () 7)
+
+//(list (list 1 (cons 2 3) 4) (list 5 6 (list 7) 8))
+//=((1 (2 3) 4) (5 6 (7) 8))
+
+//(cdr (list (list 1 (cons 2 3) 4) (list 5 (list 6) (list) 7)))
+//=((5 (6) () 7))
+
+//(cdr (cons (list 1 (cons 2 3) 4) (list 5 (list 6) (list) 7)))
+//=(5 (6) () 7)
+
+//(cdr (list 3 2))
+//=(2)
+
+//(cdr (cons 3 2))
+//=2
+
+//(define a (cons 1 3))
+//(set-car! a 5)
+//a
+//=(5 3)
+
+//(quote "test String")
+//="test String"
+
+//(quote define)
+//=define
+
+//(define a (lambda (x) 5))
+//(a (car (quote (asd 123))))
+//=5
+
+//(car (car (cdr (quote (quote (3 1 5)))) ))
+//=3
+
+//'(quote (3 1 5))
+//=(quote (3 1 5))
+
+//'`(3 1 5)
+//=`(3 1 5)
+
+//(car '`'`(3 1 5))
+//=quasiquote
+
+//(cdr (cdr '`'`(3 1 5)))
+//=UNDEFINE
+
+//(cdr '`'`(3 1 5))
+//=UNDEFINE
+
+//(car '(asd))
+//=UNDEFINE
+
+//(+ (car (car (cdr (quote (quote (3 1 5)))) )) 1)
+//=4
+
+//#(123 asd 456 zx #(123 a ) (+ 1 2))
+//=NULL
+
+//(define test (lambda (a b . c) (+ a (list-ref c 3))))
+//(test 1 2 3 4 5  6  7 8 9)
+//=7
+
+//(define test (list 1 2 3 4 5 6))
+//(list-ref test 3)
+//=4
+
+//(+ 1 2 3 4 5)
+//=15
+
+//((lambda (x) (+ x 1)) 1)
+//=2
+
+//--宏
+
+//(define-syntax test (syntax-rules () ((test a b) (+ a b))))
+//(test 7 8)
+//=15
+
+//(define-syntax test (syntax-rules () ((test . cc) (+ (list-ref cc 1) 1))))
+//(test 1 2 3 4)
+//=3
+
+(define-syntax test (syntax-rules () ((test (a b) ...) (+ 1 2 (a b) ...))))
+(define c (lambda (a) a))
+(test (c 1))
+//=4
+
+//(define-syntax test (syntax-rules () ((test (a b) ...) (+ 1 2 (a b) ...))))
+//(define c (lambda (a) a))
+//(test)
+//=3
+
+//(define-syntax test (syntax-rules () ((test (a b) ...) (+ 1 (a b) ...))))
+//(define c (lambda (a) a))
+//(test (c 1) (c 2) (c 3) (c 4) (c 5))
+//=16
+
+//(define-syntax test (syntax-rules () ((test . lis) (+ 1 2 (list-ref lis 0)))))
+//(test 1 2 3)
+//=4
+
+//(define-syntax test (syntax-rules () ((test . lis) (+ 1 2 (list-ref lis 0)))))
+//(test 1)
+//=4
+
+//--测试参数（形参）与语法同名的情况
+//(define-syntax test (syntax-rules () ((test a test) (+ a test))))
+//(test 1 5)
+//=UNDEFINE
+
+//(define-syntax test (syntax-rules () ((test a test) (+ a test))))
+//(define-syntax test1 (syntax-rules () ((test1 a t) (test a t))))
+//(test1 1 5)
+//=UNDEFINE
+
+
+
+//--加减乘除
+//(+ 1 1.0 1.3 2 3 5)
+//=13.3
+
+//(+ 1 2 3 4 5)
+//=15
+
+//(+ 3.1 3.15615616 3.1415926535)
+//=9.3977488135
+
+//(+ -3.1 -1 9)
+//=4.9
+
+//(- 3 1.1)
+//=1.9
+
+//(- 1.1 3)
+//=-1.9
+
+//(- 1.5 1.2)
+//=0.30000000000000004
+
+//(- 3 5)
+//=-2
+
+//(* 1.1 1.5 1.6 1.7)
+//=4.488
+
+//(* -1 -2 -3 -54)
+//=324
+
+//(* 1.2 3 4 1.3)
+//=18.72
+
+//(* 3 5 6 4)
+//=360
+
+//(/ 6.1 3.1)
+//=1.9677419354838708
+
+//(/ 6.2 3)
+//=2.066666666666667
+
+//(/ 3 1.2)
+//=2.5
+
+//(/ 3 2)
+//=1
+
+//--转义字符
+//"\'sasdsad"
+//="'sasdsad"
+
+//"t\'e\\st\""
+//="t'e\st""
+
+//((lambda (x y) (+ x y)) 2 3)
+//=5
+
+//--Case
+
+//(define a 13)
+//(case a
+//    ((5) 12)
+//    ((12 50 13) 100)
+//    (else 13))
+//=100
+
+//--变量定义
+//(define [int a] "测试123")
+//a
+//="测试123"
+
+//--算术运算
+//(+ 123 156
+//    (- 321 123 10 32)
+//    (* 12 3 5 (/ 19.3 5 3)))
+//=666.6
+
+//--递归，分支
+//(define factorial
+//    (lambda (n)
+//        (if (eq? n 1)
+//            1
+//            (* n (factorial (- n 1))))))
+//(factorial 10)
+//=3628800
+
+//--lambda
+//(+ 5 ((lambda (n) (+ n 5)) 123))
+//=133
+
+
+
+//--冒泡排序
+//(define operator
+//  (lambda (a)
+//    (cond
+//      ((eq? a (quote asnd)) >)
+//      ((eq? a (quote dsnd)) <)
+//     )
+//  )
+//)
+//(define insert
+//  (lambda (a lat order)
+//    (cond
+//      ((null? lat) (cons a (quote())))
+//      (((operator order) a (car lat)) (cons (car lat) (insert a (cdr lat) order)))
+//      (else (cons a lat))
+//    )
+//   )
+//)
+//(define bubble-sort
+//  (lambda (lat order)
+//  (cond
+//      ((null? (cdr lat)) lat)
+//      (else (insert (car lat) (bubble-sort (cdr lat) order) order))
+//  )
+//  )
+//)
+//(bubble-sort '(14 52 85 64 25 745 3 47 19 8 9 45)  'asnd)
+//=(3 8 9 14 19 25 45 47 52 64 85 745 )
+
+//--选择排序
+//(define min (lambda(L) (cond
+//                       ((null? (cdr L)) (car L))
+//                       ((< (car L) (min (cdr L))) (car L))
+//                       (else
+//                        (min (cdr L))
+//                        ))))
+//(define remove (lambda(A L)(cond
+//                             ((null? L) '())
+//                             ((eq? (car L) A) (cdr L))
+//                             (else
+//                              (cons (car L) (remove  A (cdr L)))))))
+//
+//(define SelectionSort(lambda(L)(cond
+//                                 ((null? L) L)
+//                                 ((null? (cdr L)) L)
+//                                 (else
+//                                  (
+//                                   let ((M (min L)))
+//                                  (cons M (SelectionSort (remove M L)))
+//                                  )
+//                                 ))))
+//(define SortedR(lambda(L)(cond
+//                             ((null? L) L)
+//                             (else (remove  (min L) L)))))
+//(SelectionSort '(2 3 1 4 5 9 6 8 7 2 2 3 4 5 10))
+//=(1 2 2 2 3 3 4 4 5 5 6 7 8 9 10)
+
+
+
+

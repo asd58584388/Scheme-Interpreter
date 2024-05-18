@@ -1,0 +1,11 @@
+//--无正常输入输出的用例（要求产生特定异常）
+
+//(define infinite (lambda (y) (+ y (infinite 10))))
+//(define f (lambda (z) 11))
+//(f (force (delay (infinite 10))))
+//=stackoverflow
+
+//(define infinite (lambda (y) (+ y (infinite 10))))
+//(define f (lambda (z) 11))
+//(f ((delay (infinite 10))))
+//=stackoverflow
