@@ -57,18 +57,6 @@ src/com/company/
 - Proper tail-call handling for recursion
 - Comprehensive test suite with multi-threaded execution
 
-## Development Skills Demonstrated
-
-- Advanced Java programming
-- Compiler/Interpreter design principles
-- Object-oriented design patterns
-- Multi-threading 
-- Recursive algorithms
-- Parser implementation
-- Type systems
-- Abstract syntax trees
-- Environment and closure handling
-
 
 ## Example Programs
 
@@ -78,4 +66,27 @@ The project includes several example Scheme programs that demonstrate the interp
 - List manipulation and higher-order functions
 - Sorting algorithms (bubble sort, selection sort)
 - Macro definition and expansion
+
+Here are some basic examples of Scheme code that can be run with this interpreter:
+
+```scheme
+; Simple arithmetic
+(+ 1 2 3 4 5)  ; => 15
+
+; Function definition and recursion
+(define factorial
+  (lambda (n)
+    (if (eq? n 1)
+        1
+        (* n (factorial (- n 1))))))
+(factorial 5)  ; => 120
+
+; List manipulation
+(cons 5 (cons 5 3))  ; => (5 5 3)
+(list (list 1 (list 2) 3) (list 4 5 6))  ; => ((1 (2) 3) (4 5 6))
+
+; Macros
+(define-syntax test (syntax-rules () ((test a b) (+ a b))))
+(test 7 8)  ; => 15
+```
 
